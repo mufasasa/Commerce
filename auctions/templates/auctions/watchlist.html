@@ -1,0 +1,32 @@
+{% extends 'auctions/layout.html' %}
+
+
+{% block title %}
+    Watchlist
+{% endblock title %}
+
+
+{% block body %}
+    <h1>{{request.user.username}}'s Watchlist </h1>
+    <ul>
+        {% if watchlist %}
+        {% if watchlist|length > 1 %}
+        
+        {% for listing in watchlist %}
+            <li>
+                <a href="{% url 'listingpage' listing.id %} ">{{listing.title}} </a>
+            </li>
+        {% endfor %}
+        {% else %}
+        <li>
+            <a href="{% url 'listingpage' watchlist.0.id %}">{{watchlist.0.title}} </a>
+        </li>
+        {% endif %}
+        {% else %}
+        <li>You have no listings in your watchlist</li>
+        {% endif %}
+            
+    </ul>
+{% endblock body %}
+    
+    

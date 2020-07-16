@@ -1,0 +1,29 @@
+{% extends 'auctions/layout.html' %}
+
+{% block title %}
+    {{listing.title}}
+{% endblock title %}
+    
+
+
+{% block body %}
+<h1>{{listing.title}}</h1>
+
+{% if winner == request.user.username %}
+    <h2>You have Won This Listing</h2>
+    {% else %}
+    <h2>This Listing has been closed</h2>
+{% endif %}
+    
+    <div>
+        <img src="{{listing.picture.url}}" width="200px">
+        <ul>
+            <li>
+                category: {{listing.category}}
+            </li>
+            <li>listed by: {{listing.lister}} on {{listing.time}} </li>
+            <li>{{listing.description}}</li>
+            <li>Current Price: {{latestbid}} </li>
+        </ul>
+    </div>
+    {% endblock %}

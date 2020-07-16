@@ -1,0 +1,68 @@
+{% extends 'auctions/layout.html' %}
+
+{% block title %}
+    {{listing.title}}
+{% endblock title %}
+    
+
+
+{% block body %}
+<h1>{{listing.title}}</h1>
+    <div>
+        <img src="{{listing.picture.url}}" width="200px">
+        <ul>
+            <li>
+                category: {{listing.category}}
+            </li>
+            <li>listed by: {{listing.lister}} on {{listing.time}} </li>
+            <li>{{listing.description}}</li>
+            <li>Current Price: {{latestbid}} </li>
+        </ul>
+    </div>
+    {% if user.is_authenticated %}
+    <div style="margin-top: 35px;">
+        
+        {% if listing.id in watchlist %}
+            <a href="{% url 'removewatchlist' listing.id %}" >Remove from watchlist</a>
+            {% else %}
+            <a href="{% url 'addwatchlist' listing.id %}" >Add to watchlist</a>
+        {% endif %}
+        <div style="margin-top: 25px;">
+        <form action="{% url 'addbid' listing.id %}" method="POST">
+            {% csrf_token %}
+            <label for="bid">Enter Bid</label>
+            <input type="number" min = '{{ minimum }}' name="bid">
+            <input type="submit">
+        </form>
+        </div>
+        <div style="margin-top: 20px;">
+            
+            {% if request.user.username == listing.lister %}
+                <a href="{% url 'closeauction' listing.id %} " >Close Auction</a>
+            {% endif %}
+                
+        </div>
+        <div style="margin-top: 25px;">
+        <form action="{% url 'addcomment' listing.id %}" method="POST">
+            {% csrf_token %}
+            <label for="comment">Add Comment</label>
+            <input type="text" maxlength="128" name="comment">
+            <input type="submit">
+
+        </form>
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if comments %}    
+    <div style="margin-top: 25px;">
+        <h2>Comments</h2>
+        
+        {% for comment in comments %}
+            <p> {{comment.user}}: {{comment}}</p>
+        {% endfor %}
+            
+    </div>
+    {% endif %}
+{% endblock body %}
+    

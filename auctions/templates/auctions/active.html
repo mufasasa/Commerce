@@ -1,0 +1,17 @@
+{% extends 'auctions/layout.html' %}
+
+
+{% block body %}
+    {% for listing in all %}
+    <div style="border-left: 200px;">
+        <img src="{{listing.picture.url}}" width="180px" alt="image">
+        <div style="border-top: 30px;">
+        {{listing.title}} {{listing.price}}
+        <div>
+            {{listing.description}}
+        </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock body %}
+    
