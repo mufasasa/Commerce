@@ -2,9 +2,9 @@
 
 {% block body %}
     <h2>Active Listings</h2>
-
+    <div style="display: grid; place-items:center;">
     {% for listing in listings %}
-    <div style="border-left: 200px;">
+    <div style="padding-top: 50px;">
         <img src="{{listing.picture.url}}" width="180px" alt="image" style="float: left;">
         <div style="margin: 50px;">
         {{listing.title}}: Current Price: {{listing.bids}}
@@ -15,4 +15,5 @@
         <a href="{% url 'listingpage' listing.id %}">Go to Listing Page</a>
     </div>
     {% endfor %}
+</div>
 {% endblock %}
